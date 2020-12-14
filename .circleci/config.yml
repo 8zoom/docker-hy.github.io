@@ -10,9 +10,8 @@ jobs:
         - docker/push:
             digest-path: /tmp/digest.txt
             image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
-        - run:
-            command: |
-              docker push registry.heroku.com/${HEROKU_APP_NAME}/web
+        - run: docker tag $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME registry.heroku.com/${HEROKU_APP_NAME}/web
+        - run: docker push registry.heroku.com/${HEROKU_APP_NAME}/web
 
 #   deploy:
 #    steps:
