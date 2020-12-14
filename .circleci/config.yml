@@ -12,14 +12,40 @@ jobs:
             image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
         - run:
             command: |
-                echo "Digest is: $(</tmp/digest.txt)"
-  deploy:
+              #  echo "Digest is: $(</tmp/digest.txt)"
+                 docker tag jay101/docker-hy.github.io:latest registry.heroku.com/docker-circle/web
+#   deploy:
+#    steps:
+#       - run:
+#           name: Login into Heroku Docker Repository
+#           command: |
+#             docker login --username=$HEROKU_LOGIN --password=$HEROKU_API_KEY registry.heroku.com
+#
+#       - run:
+#           name: Tag repository
+#           command: |
+#             docker tag $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME $REGISTRY/$HEROKU_APP_NAME
+#       - run:
+#           name: Deploy Heroku Docker Container
+#           command: |
+#
+# heroku container:release -a docker-circle web
+# docker tag jay101/docker-hy.github.io:latest registry.heroku.com/docker-circle/web
+# docker push registry.heroku.com/docker-circle/web
+#             heroku container:push << parameters.app-type >> -a $REGISTRY/$HEROKU_APP_NAME 
+#            heroku container:release << parameters.app-type >> -a  $REGISTRY/$HEROKU_APP_NAME 
+
     executor: heroku/default
     steps:
         - checkout
         - heroku/install
-        - heroku/push-docker-image
-        - heroku/release-docker-image
+        - run:
+            command: |
+              docker push registry.heroku.com/docker-circle/web
+        - run:
+            command: |
+              heroku container:release -a docker-circle web
+
 orbs:
   heroku: circleci/heroku@1.2.3
   docker: circleci/docker@1.0.0
