@@ -19,7 +19,7 @@ FROM nginx:alpine
 
 COPY --from=build-stage /usr/src/app/_site/ /usr/share/nginx/html
 
-COPY default.conf /usr/share/nginx/html
+COPY default.conf /etc/nginx/conf.d/
 
 # replace $PORT placeholder with HEROKU given port in default.conf and run nginx service
 CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
