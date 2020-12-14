@@ -12,7 +12,10 @@ jobs:
             image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
         - run:
             command: |
-                 docker tag jay101/docker-hy.github.io:latest registry.heroku.com/docker-circle/web
+                 docker tag $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME registry.heroku.com/docker-circle/web
+        - run:
+            command: |
+              docker push registry.heroku.com/docker-circle/web
 
 #   deploy:
 #    steps:
@@ -40,9 +43,6 @@ jobs:
     steps:
         - checkout
         - heroku/install
-        - run:
-            command: |
-              docker push registry.heroku.com/docker-circle/web
         - run:
             command: |
               heroku container:release -a docker-circle web
