@@ -18,7 +18,7 @@ Attendees need to have computers with admin/superuser privileges. Attendees are 
 
 The course material is meant to be read sequentially, part by part, from start to finish. To get a passing grade you have to complete each exercise, although one exercise can be skipped for each part. Some of the exercises are marked as mandatory and those can not be skipped. The exercises are placed in the material in such a way that you will have learned the necessary skills from the material prior to each given exercise. You can do the exercises as you're going through the material.
 
-The course material is written for Ubuntu, so some instructions may lack platform-specific details. Please make a [pull request](https://docker-hy.github.io/contributing) to the course material in case you find any mistakes or wish to add something. You can also [contribute](https://docker-hy.github.io/contributing) through GitHub in case you find any issues with the course material.
+The course material is written for Gentoo (naturally), so some instructions may lack platform-specific details. Please make a [pull request](https://docker-hy.github.io/contributing) to the course material in case you find any mistakes or wish to add something. You can also [contribute](https://docker-hy.github.io/contributing) through GitHub in case you find any issues with the course material.
 
 ### Completing course ###
 
