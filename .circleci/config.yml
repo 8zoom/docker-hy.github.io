@@ -1,13 +1,18 @@
 jobs:
   build:
-    executor: docker/docker
-    steps:
+  executor: docker/docker
+  steps:
       - setup_remote_docker
       - checkout
       - docker/check
-      - docker/publish:
+      - docker/build:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
-          tag: 'latest'
+      - docker/push:
+          digest-path: /tmp/digest.txt
+          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+      - run:
+          command: |
+              echo "Digest is: $(</tmp/digest.txt)"
   deploy:
     executor: heroku/default
     steps:
