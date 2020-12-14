@@ -1,9 +1,13 @@
 jobs:
   build:
-    - docker/publish:
-        image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
-        tag: 'latest'
-
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/publish:
+          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+          tag: 'latest'
   deploy:
     executor: heroku/default
     steps:
