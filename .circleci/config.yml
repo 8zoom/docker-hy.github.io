@@ -12,10 +12,7 @@ jobs:
             image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
         - run:
             command: |
-                 docker tag $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME registry.heroku.com/docker-circle/web
-        - run:
-            command: |
-              docker push registry.heroku.com/docker-circle/web
+              docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web
 
 #   deploy:
 #    steps:
@@ -45,7 +42,7 @@ jobs:
         - heroku/install
         - run:
             command: |
-              heroku container:release -a docker-circle web
+              heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web
 
 orbs:
   heroku: circleci/heroku@1.2.3
