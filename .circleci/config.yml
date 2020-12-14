@@ -12,8 +12,8 @@ jobs:
             image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
         - run:
             command: |
-              #  echo "Digest is: $(</tmp/digest.txt)"
                  docker tag jay101/docker-hy.github.io:latest registry.heroku.com/docker-circle/web
+
 #   deploy:
 #    steps:
 #       - run:
@@ -35,6 +35,7 @@ jobs:
 #             heroku container:push << parameters.app-type >> -a $REGISTRY/$HEROKU_APP_NAME 
 #            heroku container:release << parameters.app-type >> -a  $REGISTRY/$HEROKU_APP_NAME 
 
+  deploy:
     executor: heroku/default
     steps:
         - checkout
