@@ -1,22 +1,32 @@
 jobs:
   build:
-    - docker/publish:
-        image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
-        tag: 'latest'
-
+    executor: docker/docker
+    steps:
+        - setup_remote_docker
+        - checkout
+        - docker/check
+        - docker/build:
+            image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+        - docker/push:
+            digest-path: /tmp/digest.txt
+            image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+        - run: docker tag docker.io/$DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME:${tag}} registry.heroku.com/${HEROKU_APP_NAME}/web
+        - run: docker push registry.heroku.com/${HEROKU_APP_NAME}/web
   deploy:
     executor: heroku/default
     steps:
-      - checkout
-      - heroku/install
-      - heroku/push-docker-image
-      - heroku/release-docker-image
+        - checkout
+        - heroku/install
+        - run:
+            command: |
+              heroku container:release -a ${HEROKU_APP_NAME} web
+
 orbs:
   heroku: circleci/heroku@1.2.3
   docker: circleci/docker@1.0.0
 version: 2.1
 workflows:
-  heroku_deploy:
+  build-and-deploy:
     jobs:
       - build
       - deploy:
