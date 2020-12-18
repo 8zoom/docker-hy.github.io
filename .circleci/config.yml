@@ -11,8 +11,12 @@ jobs:
         - setup_remote_docker
         - checkout
         - docker/check
-        - docker/build:
-            image: registry.heroku.com/$DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME/web
+        - command: |
+          if [[ $(command -v heroku) == "" ]]; then
+            curl https://cli-assets.heroku.com/install.sh | sh
+          else
+            echo "Heroku is already installed. No operation was performed."
+          fi
         - run: heroku:login
         - run: docker push registry.heroku.com/$DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME/web
         - run: heroku container:release -a docker-hy-github-io-my web
