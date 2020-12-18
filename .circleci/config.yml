@@ -6,13 +6,11 @@ jobs:
         - checkout
         - docker/check
         - docker/build:
-            image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+            image: registry.heroku.com/$DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME/web
+        - docker/push:
         - docker/push:
             digest-path: /tmp/digest.txt
             image: registry.heroku.com/$DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME/web
-            remote-docker-dlc: true
-            tag: latest
-            use-remote-docker: true
         - run: echo "Docker image is " 
         - run: docker images
         - run: echo "fin." 
