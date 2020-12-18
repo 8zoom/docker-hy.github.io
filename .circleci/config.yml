@@ -8,7 +8,6 @@ jobs:
         - docker/build:
             image: registry.heroku.com/$DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME/web
         - docker/push:
-        - docker/push:
             digest-path: /tmp/digest.txt
             image: registry.heroku.com/$DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME/web
         - run: echo "Docker image is " 
