@@ -13,7 +13,6 @@ jobs:
         - docker/check
         - docker/build:
             image: registry.heroku.com/$DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME/web
-        - run:  docker login --username=$HEROKU_LOGIN --password=$HEROKU_API_KEY registry.heroku.com
         - run: docker push registry.heroku.com/$DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME/web
         - run: heroku:login
         - run: heroku container:release -a docker-hy-github-io-my web
