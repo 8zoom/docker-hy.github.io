@@ -16,9 +16,8 @@ jobs:
   deploy:
     executor: heroku/default
     steps:
-        - install
-        - check-authentication
         - checkout
+        - heroku/install
         - run:
             command: |
               heroku container:release -a ${HEROKU_APP_NAME} web
