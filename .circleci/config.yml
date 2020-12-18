@@ -1,4 +1,10 @@
 jobs:
+  setup:
+    executor: heroku/default
+    steps:
+        - checkout
+        - install
+        - check-authentication
   build:
     executor: docker/docker
     steps:
@@ -17,7 +23,7 @@ jobs:
     executor: heroku/default
     steps:
         - checkout
-        - heroku/install
+        - check-authentication
         - run:
             command: |
               heroku container:release -a ${HEROKU_APP_NAME} web
@@ -29,6 +35,7 @@ version: 2.1
 workflows:
   build-and-deploy:
     jobs:
+      - setup
       - build
       - deploy:
           requires:
